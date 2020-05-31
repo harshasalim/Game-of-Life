@@ -3,7 +3,7 @@ import produce from 'immer';
 import './App.css';
 
 const numRows = 50;
-const numCols = 50;
+const numCols = 70;
 
 //neighbor cells
 const operations = [
@@ -17,6 +17,13 @@ const operations = [
   [-1,0]
 ];
 
+const generateEmptyGrid = () => {
+  const rows = [];
+  for( let i=0;i<numRows;i++){
+    rows.push(Array.from(Array(numCols), () => 0))
+  }
+  return rows;
+}
 
 function App() {
   const [grid, setGrid] = useState(() => {
@@ -68,8 +75,10 @@ function App() {
   },[])
 
   return (
-    <div>
-    <button onClick={() => {
+    <div className='App'>
+    <h1 style={{padding:10, color:'white'}}>The Game of Life</h1>
+    <div className='Buttons'>
+    <button className='Button' onClick={() => {
       setRunning(!running);
       if(!running){
       runningRef.current = true;//to ensure no race condition occurs between runningRef getting updated and runSimulation occuring
@@ -78,10 +87,24 @@ function App() {
     }}>
     {running ? 'stop' : 'start'}
     </button> 
-     
-    <div style={{
+    <button className='Button' onClick={() => {
+      const rows = [];
+      for( let i=0;i<numRows;i++){
+        rows.push(Array.from(Array(numCols), () => (Math.random() > 0.7 ? 1 :0))
+        );
+     }setGrid(rows);
+    }}>
+     random
+    </button> 
+    <button className='Button' onClick={() => {
+      setGrid(generateEmptyGrid());
+    }}>
+      clear
+    </button> 
+    </div>
+    <div className='Grid' style={{
       display: 'grid',
-      gridTemplateColumns: `repeat(${numCols},20px)`
+      gridTemplateColumns: `repeat(${numCols},18px)`
     }}>
      {grid.map((rows,i) => 
         rows.map((col,j) => (
@@ -92,7 +115,7 @@ function App() {
                 })
                 setGrid(newGrid);
               }}
-              style={{width:20, height:20, 
+              style={{width:18, height:18, 
               backgroundColor: grid[i][j] ? 'pink' : undefined,
               border: 'solid 1px black'}}/>)))}
     </div>
