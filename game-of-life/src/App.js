@@ -76,7 +76,8 @@ function App() {
 
   return (
     <div className='App'>
-    <h1 style={{padding:10, color:'white'}}>The Game of Life</h1>
+    <h1 style={{marginTop:10, marginBottom: 2,color:'white'}}>The Game of Life</h1>
+    <p style={{color:'white'}}><i>John Conway's Game of Life is a zero-player game, played by by creating an initial configuration and observing how it evolves. For more information, <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" target="_blank" style={{color:'#bbbbbb'}}>click here</a>.</i></p>
     <div className='Buttons'>
     <button className='Button' onClick={() => {
       setRunning(!running);
